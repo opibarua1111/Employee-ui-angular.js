@@ -39,14 +39,6 @@ export class NavigationService {
     });
   }
 
-  getEmployees(Page: number, Size: number) {
-    return this.http.get<any[]>(this.baseurl, {
-      params: new HttpParams()
-        .set('Page', Page ? Page : '')
-        .set('Size', Size ? Size : ''),
-    });
-  }
-
   getEmployee(id: string) {
     let url = this.baseurl + id;
     return this.http.get(url);
@@ -61,6 +53,7 @@ export class NavigationService {
   }
   deleteEmployee(id: string) {
     let url = this.baseurl + id;
+    console.log('hit');
     return this.http.put(url, '', { responseType: 'text' });
   }
   private handleError(error: HttpErrorResponse) {

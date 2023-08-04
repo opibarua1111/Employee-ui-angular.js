@@ -2,7 +2,11 @@
   <div>
     <h3 class="text-center py-3">Edit Employee info</h3>
   </div>
-  <form (ngSubmit)="editEmployee()" [formGroup]="editEmployeeForm">
+  <form
+    (ngSubmit)="editEmployee()"
+    [formGroup]="editEmployeeForm"
+    class="border p-4 mb-3 rounded-2"
+  >
     <!-- First Name and Last name -->
     <div class="row mb-3">
       <div class="col">

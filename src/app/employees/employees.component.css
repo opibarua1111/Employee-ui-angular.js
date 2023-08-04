@@ -7,3 +7,9 @@
   background-color: #5cb85c;
   border-color: #5cb85c;
 }
+
+.table-head {
+  color: #555;
+  text-transform: uppercase;
+  font-weight: 500;
+}
