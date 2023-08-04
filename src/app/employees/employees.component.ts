@@ -22,23 +22,13 @@ export class EmployeesComponent {
   employees: Employee[] = [];
   message = '';
   Page = 1;
-  Size = 5;
+  Size = 10;
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private navigationService: NavigationService
+    private navigationService: NavigationService,
+    private activatedRoute: ActivatedRoute
   ) {}
 
-  public AddPageQuery(pageNo: any) {
-    this.Page = pageNo;
-    this.router.navigate([], {
-      relativeTo: this.activatedRoute,
-      queryParams: {
-        Page: pageNo,
-      },
-      queryParamsHandling: 'merge',
-    });
-  }
   public AddDesignationQuery(event: any) {
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
@@ -75,6 +65,16 @@ export class EmployeesComponent {
       queryParamsHandling: 'merge',
     });
   }
+  public AddPageQuery(pageNo: any) {
+    this.Page = pageNo;
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: {
+        Page: pageNo,
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
   public deleteEmployee(id: any) {
     this.navigationService.deleteEmployee(id).subscribe((res: any) => {
       this.message = res.toString();
@@ -83,24 +83,21 @@ export class EmployeesComponent {
   }
 
   ngOnInit(): void {
-    this.navigationService.getEmployees(1, this.Size).subscribe((res: any) => {
-      this.employees = res;
-    });
     this.activatedRoute.queryParams.subscribe((params: any) => {
+      let Page = params.Page;
       let SearchName = params.SearchName;
       let Designation = params.Designation;
       let MinAge = params.MinAge;
       let MaxAge = params.MaxAge;
-      let Page = params.Page;
       let Size = this.Size;
-      if (SearchName || Designation || MinAge || MaxAge || Page || Size) {
+      if (Page || SearchName || Designation || MinAge || MaxAge || Size) {
         this.navigationService
           .getQueryEmployees(
+            Page,
             SearchName,
             Designation,
             MinAge,
             MaxAge,
-            Page,
             Size
           )
           .subscribe((res: any) => {

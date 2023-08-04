@@ -62,7 +62,7 @@ export class AddEmployeeComponent {
     this.navigationService.addEmployee(employee).subscribe((res: any) => {
       this.message = res.toString();
       setTimeout(() => {
-        this.router.navigate(['/employees']);
+        this.router.navigateByUrl('/employees?Page=1');
       }, 5000);
     });
   }

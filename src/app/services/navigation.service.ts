@@ -1,5 +1,10 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, throwError } from 'rxjs';
 import { Employee } from '../models/models';
 
 @Injectable({
@@ -16,20 +21,20 @@ export class NavigationService {
   }
 
   getQueryEmployees(
+    Page: number,
     SearchName: string,
     Designation: string,
-    MinAge: number,
-    MaxAge: number,
-    Page: number,
+    MinAge: string,
+    MaxAge: string,
     Size: number
   ) {
     return this.http.get<any[]>(this.baseurl, {
       params: new HttpParams()
+        .set('Page', Page ? Page : '')
         .set('SearchName', SearchName ? SearchName : '')
         .set('Designation', Designation ? Designation : '')
         .set('MinAge', MinAge ? MinAge : '')
         .set('MaxAge', MaxAge ? MaxAge : '')
-        .set('Page', Page ? Page : '')
         .set('Size', Size ? Size : ''),
     });
   }
@@ -49,10 +54,15 @@ export class NavigationService {
 
   editEmployee(employee: Employee, id: string) {
     let url = this.baseurl + 'editEmployee/' + id;
-    return this.http.post(url, employee, { responseType: 'text' });
+    return this.http
+      .post(url, employee, { responseType: 'text' })
+      .pipe(catchError(this.handleError));
   }
   deleteEmployee(id: string) {
     let url = this.baseurl + id;
     return this.http.put(url, '', { responseType: 'text' });
+  }
+  handleError(error: HttpErrorResponse) {
+    return throwError(error);
   }
 }

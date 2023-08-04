@@ -63,7 +63,7 @@ export class EditEmployeeComponent {
     this.navigationService.editEmployee(employee, id).subscribe((res: any) => {
       this.message = res.toString();
       setTimeout(() => {
-        this.router.navigate(['/employees']);
+        this.router.navigateByUrl('/employees?Page=1');
       }, 5000);
     });
   }
