@@ -17,6 +17,12 @@
         <!-- errors -->
         <div
           class="form-text text-danger"
+          *ngIf="FirstName.errors?.['required'] && (FirstName.dirty || FirstName.touched)"
+        >
+          First Name is Required
+        </div>
+        <div
+          class="form-text text-danger"
           *ngIf="!!FirstName.errors?.['minlength'] && (FirstName.dirty || FirstName.touched)"
         >
           First Name is too short. At least 2 characters.
@@ -42,6 +48,12 @@
         <!-- errors -->
         <div
           class="form-text text-danger"
+          *ngIf="LastName.errors?.['required'] && (LastName.dirty || LastName.touched)"
+        >
+          Last Name is Required
+        </div>
+        <div
+          class="form-text text-danger"
           *ngIf="!!LastName.errors?.['minlength'] && (LastName.dirty || LastName.touched)"
         >
           Last Name is too short. At least 2 characters.
@@ -65,6 +77,13 @@
           formControlName="salary"
           [(ngModel)]="employee.salary"
         />
+        <!-- errors -->
+        <div
+          class="form-text text-danger"
+          *ngIf="Salary.errors?.['required'] && (Salary.dirty || Salary.touched)"
+        >
+          Salary is Required
+        </div>
       </div>
       <div class="col">
         <label for="age" class="form-label">Age</label>
@@ -75,6 +94,13 @@
           formControlName="age"
           [(ngModel)]="employee.age"
         />
+        <!-- errors -->
+        <div
+          class="form-text text-danger"
+          *ngIf="Age.errors?.['required'] && (Age.dirty || Age.touched)"
+        >
+          Age is Required
+        </div>
       </div>
     </div>
     <!-- Designation -->
@@ -87,6 +113,13 @@
         formControlName="designation"
         [(ngModel)]="employee.designation"
       />
+      <!-- errors -->
+      <div
+        class="form-text text-danger"
+        *ngIf="Designation.errors?.['required'] && (Designation.dirty || Designation.touched)"
+      >
+        Designation is Required
+      </div>
     </div>
     <!-- Description -->
     <div class="mb-3">
@@ -98,6 +131,13 @@
         formControlName="description"
         [(ngModel)]="employee.description"
       ></textarea>
+      <!-- errors -->
+      <div
+        class="form-text text-danger"
+        *ngIf="Description.errors?.['required'] && (Description.dirty || Description.touched)"
+      >
+        Description is Required
+      </div>
     </div>
     <!-- Create Account Button -->
     <div>

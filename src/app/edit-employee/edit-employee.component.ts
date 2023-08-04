@@ -35,16 +35,24 @@ export class EditEmployeeComponent {
     this.editEmployeeForm = this.fb.group({
       firstName: [
         '',
-        [Validators.minLength(2), Validators.pattern('[a-zA-Z].*')],
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.pattern('[a-zA-Z].*'),
+        ],
       ],
       lastName: [
         '',
-        [Validators.minLength(2), Validators.pattern('[a-zA-Z].*')],
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.pattern('[a-zA-Z].*'),
+        ],
       ],
-      description: [''],
-      salary: [''],
-      age: [''],
-      designation: [''],
+      description: ['', [Validators.required]],
+      salary: ['', [Validators.required]],
+      age: ['', [Validators.required]],
+      designation: ['', [Validators.required]],
     });
   }
 

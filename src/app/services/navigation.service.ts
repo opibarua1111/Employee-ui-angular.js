@@ -4,7 +4,7 @@ import {
   HttpParams,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { catchError, retry, throwError } from 'rxjs';
 import { Employee } from '../models/models';
 
 @Injectable({
@@ -53,16 +53,31 @@ export class NavigationService {
   }
 
   editEmployee(employee: Employee, id: string) {
-    let url = this.baseurl + 'editEmployee/' + id;
-    return this.http
-      .post(url, employee, { responseType: 'text' })
-      .pipe(catchError(this.handleError));
+    let url = this.baseurl + id;
+    return this.http.post(url, employee, { responseType: 'text' }).pipe(
+      retry(3), // retry a failed request up to 3 times
+      catchError(this.handleError) // then handle the error
+    );
   }
   deleteEmployee(id: string) {
     let url = this.baseurl + id;
     return this.http.put(url, '', { responseType: 'text' });
   }
-  handleError(error: HttpErrorResponse) {
-    return throwError(error);
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, body was: `,
+        error.error
+      );
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(
+      () => new Error('Something bad happened; please try again later.')
+    );
   }
 }
